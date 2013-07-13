@@ -1,13 +1,13 @@
-all: SequenceLength.class FakeInputStream.class SequenceLengthTest.class
+all: SequenceLength.class SequenceLengthTest.class
+
+test: SequenceLengthTest.class
+	java -classpath ".:/usr/share/java/junit4.jar" org.junit.runner.JUnitCore SequenceLengthTest
 
 clean:
 	rm *.class
 
-SequenceLengthTest.class: SequenceLengthTest.java SequenceLength.class FakeInputStream.class
-	javac -classpath /usr/share/java/junit4.jar SequenceLengthTest.java
+SequenceLengthTest.class: SequenceLengthTest.java SequenceLength.class
+	javac -classpath ".:/usr/share/java/junit4.jar" SequenceLengthTest.java
 
 SequenceLength.class: SequenceLength.java
 	javac SequenceLength.java
-
-FakeInputStream.class: FakeInputStream.java
-	javac FakeInputStream.java

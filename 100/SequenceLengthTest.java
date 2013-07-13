@@ -1,14 +1,32 @@
-package com.lackita.uva.threenplusone;
-//import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
-import java.io.*;
+public class SequenceLengthTest {
+	private SequenceLength sl;
 
-@RunWith(JUnit4.class) public class SequenceLengthTest {
-	@Test public void BaseCase() {
-		SequenceLength sl = SequenceLength(FakeInputStream("1 1"));
+	@Before
+	public void setUp() {
+		sl = new SequenceLength();
+	}
+	
+	@Test
+	public void testBaseValue() {
+		assertEquals(1, sl.maximumCycleLength("1 1"));
+	}
+
+	@Test
+	public void testEvenValue() {
+		assertEquals(3, sl.maximumCycleLength("4 4"));
+	}
+	
+	@Test
+	public void testOddValue() {
+		assertEquals(6, sl.maximumCycleLength("5 5"));
+	}
+	
+	@Test
+	public void testMultipleValue() {
+		assertEquals(8, sl.maximumCycleLength("3 4"));
 	}
 }
