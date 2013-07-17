@@ -1,5 +1,5 @@
 test: all
-	echo "foo" | java Main
+	echo "1 1" | java Main
 
 all: Main.class
 

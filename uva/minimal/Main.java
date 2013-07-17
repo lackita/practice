@@ -6,8 +6,8 @@ class Main {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String line;
 		while ((line = in.readLine()) != null) {
-			int max_cycle = sl.maximumCycleLength(line);
-			System.out.println(line + " " + Integer.toString(max_cycle));
+			int max_cycle = sl.maximumCycleLength(line.trim());
+			System.out.println(line.trim() + " " + Integer.toString(max_cycle));
 		}
 	}
 }
