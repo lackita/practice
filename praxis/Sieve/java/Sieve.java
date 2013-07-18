@@ -10,9 +10,14 @@ class Sieve {
 		}
 
 		for (Integer prime : primes.toArray(new Integer[0])) {
-			for (Integer composite = 2*prime;composite <= maximum;composite += prime) {
-				if (primes.contains(composite)) {
-					primes.remove(composite);
+			if (prime > new Integer((int) Math.pow(maximum, 0.5))) {
+				break;
+			}
+			else {
+				for (Integer composite = new Integer((int) Math.pow(prime, 2));composite <= maximum;composite += prime) {
+					if (primes.contains(composite)) {
+						primes.remove(composite);
+					}
 				}
 			}
 		}
