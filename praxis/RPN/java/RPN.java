@@ -1,7 +1,19 @@
 import java.util.*;
+import java.io.*;
 
 class RPN {
-	public int calc(String expression) {
+	public static void main(String[] args) throws IOException {
+		RPN rpn = new RPN();
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		String line;
+		while ((line = in.readLine()) != null) {
+			line = line.trim();
+			double result = rpn.calc(line);
+			System.out.println(Double.toString(result));
+		}
+	}
+
+	public double calc(String expression) {
 		Stack<Token> operands = operands(expression);
 		return operands.pop().calculate(operands);
 	}
@@ -35,38 +47,48 @@ class RPN {
 }
 
 abstract class Token {
-	abstract public int calculate(Stack<Token> operands);
+	abstract public double calculate(Stack<Token> operands);
+
+	public boolean isOperator() {
+		return false;
+	}
+}
+
+abstract class Operator extends Token {
+	public double calculate(Stack<Token> operands) {
+		double second = operands.pop().calculate(operands);
+		double first = operands.pop().calculate(operands);;
+		return calculate(first, second);
+	}
+
+	abstract protected double calculate(double first, double second);
 
 	public boolean isOperator() {
 		return true;
 	}
 }
 
-class Addition extends Token {
-	public int calculate(Stack<Token> operands) {
-		return operands.pop().calculate(operands) + operands.pop().calculate(operands);
+class Addition extends Operator {
+	protected double calculate(double first, double second) {
+		return first + second;
 	}
 }
 
-class Subtraction extends Token {
-	public int calculate(Stack<Token> operands) {
-		Token first = operands.pop();
-		Token second = operands.pop();
-		return second.calculate(operands) - first.calculate(operands);
+class Subtraction extends Operator {
+	protected double calculate(double first, double second) {
+		return first - second;
 	}
 }
 
-class Multiplication extends Token {
-	public int calculate(Stack<Token> operands) {
-		return operands.pop().calculate(operands) * operands.pop().calculate(operands);
+class Multiplication extends Operator {
+	protected double calculate(double first, double second) {
+		return first * second;
 	}
 }
 
-class Division extends Token {
-	public int calculate(Stack<Token> operands) {
-		Token first = operands.pop();
-		Token second = operands.pop();
-		return second.calculate(operands) / first.calculate(operands);
+class Division extends Operator {
+	protected double calculate(double first, double second) {
+		return first / second;
 	}
 }
 
@@ -77,11 +99,7 @@ class Number extends Token {
 		this.value = value;
 	}
 
-	public int calculate(Stack<Token> operands) {
-		return Integer.parseInt(value);
-	}
-
-	public boolean isOperator() {
-		return false;
+	public double calculate(Stack<Token> operands) {
+		return Double.parseDouble(value);
 	}
 }
