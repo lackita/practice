@@ -1,0 +1,43 @@
+definitions:
+	c(x, y) => x choose y
+	(x)_y => falling factorial of x until y
+
+probability of winning in 4 calls:
+	observations:
+		- must involve free space
+		- all possible combinations of boards = c(74, 4)
+		- winning combinations = 4
+	calculation:
+		4/c(74, 4)
+
+probability of winning in 5 calls:
+	observations:
+		- counting number of solutions can be decomposed into involving or not involving the free space
+			- if free space is involved:
+				- multiply number of wins in 4 calls by all of the possible choices for the fifth call
+				- winning combinations: 4 * 70
+			- if free space is not involved:
+				- 8 possible board arrangements
+			- number of possible solutions = 4*70 + 8
+		- all possible combinations of boards = c(74, 5)
+	calculation:
+		(4*70 + 8)/c(74, 5)
+
+probability of winning in 6 calls:
+	observations:
+		- number of possible wins = possible wins for 5 calls * free element
+		-						  = (4*70 + 8)*69
+	calculation:
+		(4*70 + 8)*69/c(74, 6)
+
+7: (4*70 + 8)*69*68/c(74, 7)
+
+5 < n < 8: (4*70 + 8)*((69)_(74 - n))/c(74, n)
+
+8:
+	observations:
+		- need to worry about overcounting number of solutions, as some boards can have multiple solutions
+		- can apply previous generalized count of solutions, and subtract number of boards that have multiple solutions
+		- boards with multiple solutions: 6
+
+realization: the problem is actually asking to determine the answer through large sample sizes
