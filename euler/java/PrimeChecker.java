@@ -29,7 +29,8 @@ public class PrimeChecker {
 	}
 
 	public void calculatePast(int x) {
-		for (++largest_value;primes.higher(x) == null;++largest_value) {
+		while(primes.higher(x) == null) {
+			++largest_value;
 			if (relativelyPrimeToComputedPrimes(largest_value)) {
 				primes.add(largest_value);
 			}
@@ -37,10 +38,10 @@ public class PrimeChecker {
 	}
 
 	private boolean relativelyPrimeToComputedPrimes(int current_value) {
-		Iterator prime_iterator = primes.iterator();
+		Iterator<Integer> prime_iterator = primes.iterator();
 		boolean composite = false;
 		while (!composite && prime_iterator.hasNext()) {
-			Integer prime = (Integer) prime_iterator.next();
+			Integer prime = prime_iterator.next();
 			if (current_value % prime == 0) {
 				composite = true;
 			}
@@ -59,5 +60,9 @@ class PrimeIterator {
 
 	public int current() {
 		return last_prime;
+	}
+
+	public boolean hasNext() {
+		return true;
 	}
 }

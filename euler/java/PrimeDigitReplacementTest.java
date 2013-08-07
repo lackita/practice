@@ -1,4 +1,6 @@
+import java.util.*;
 import static org.junit.Assert.*;
+import static org.junit.matchers.JUnitMatchers.*;
 import org.junit.Test;
 import org.junit.Before;
 
@@ -11,22 +13,30 @@ public class PrimeDigitReplacementTest {
 
 	@Test
 	public void onePrimeFamily() {
+		assertEquals(2, pdr.firstPrimeInClassSize(1));
+	}
+
+	@Test
+	public void fourPrimeFamily() {
+		assertEquals(2, pdr.firstPrimeInClassSize(4));
+	}
+
+	@Test
+	public void sixPrimeFamily() {
 		assertEquals(13, pdr.firstPrimeInClassSize(6));
 	}
 
 	@Test
-	public void thirteenFamily() {
-		assertArrayEquals(new Integer[]{13, 23, 43, 53, 73, 83}, pdr.familyFor(13).toArray(new Integer[0]));
-	}
+	public void twoFamilies() {
+		MathSet increments = new MathSet();
+		MathSet result = new MathSet();
+		result.add(2);
+		assertEquals(result, pdr.familyFor(2, increments));
 
-	// @Test
-	// public void twoFamily() {
-	// 	assertArrayEquals(new Integer[]{2, 3, 5, 7}, pdr.familyFor(2).toArray(new Integer[0]));
-	// }
-
-	@Test
-	public void digitIncrementValue() {
-		assertEquals(10, pdr.incrementValueForFirstDigit(13));
-		assertEquals(1, pdr.incrementValueForFirstDigit(2));
+		increments.add(1);
+		result.add(3);
+		result.add(5);
+		result.add(7);
+		assertEquals(result, pdr.familyFor(2, increments));
 	}
 }
